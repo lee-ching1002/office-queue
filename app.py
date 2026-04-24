@@ -1,4 +1,7 @@
-# 這是我們剛剛定義的字典
+import streamlit as st
+import gspread
+
+# 1. 直接定義權限字典 (這已經避開了所有格式轉譯問題)
 creds_dict = {
     "type": "service_account",
     "project_id": "officequeuesystem-494313",
@@ -13,8 +16,13 @@ creds_dict = {
     "universe_domain": "googleapis.com"
 }
 
-# 【關鍵修正】：手動替換轉譯字符為真實換行
+# 2. 確保私鑰換行正確
 creds_dict["private_key"] = creds_dict["private_key"].replace('\\n', '\n')
 
+# 3. 建立連線
 gc = gspread.service_account_from_dict(creds_dict)
 sh = gc.open('工程科排隊系統').sheet1
+
+# 4. 接下來是您的 UI 程式碼...
+st.title("工程科諮詢預約系統")
+# ... (您的其他顯示程式碼)
