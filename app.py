@@ -1,9 +1,11 @@
 import streamlit as st
 import gspread
+import os
 
-# 直接讀取檔案，不要使用 dict，這是最穩定的連線方式
-gc = gspread.service_account(filename='service-account.json')
+# 獲取 app.py 所在的資料夾路徑
+current_dir = os.path.dirname(os.path.abspath(__file__))
+json_path = os.path.join(current_dir, 'service-account.json')
+
+# 使用完整路徑讀取
+gc = gspread.service_account(filename=json_path)
 sh = gc.open('工程科排隊系統').sheet1
-
-st.title("工程科諮詢預約系統")
-st.write("系統連線成功！")
