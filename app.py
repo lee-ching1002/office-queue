@@ -1,7 +1,4 @@
-import streamlit as st
-import gspread
-
-# 1. 權限設定 (確保格式無誤)
+# 請將這部分代碼替換掉，特別注意私鑰那行的賦值方式
 creds_dict = {
     "type": "service_account",
     "project_id": "officequeuesystem-494313",
@@ -39,33 +36,3 @@ creds_dict = {
     "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/queue-bot%40officequeuesystem-494313.iam.gserviceaccount.com",
     "universe_domain": "googleapis.com"
 }
-
-# 2. 格式轉換
-creds_dict["private_key"] = creds_dict["private_key"].replace('\\n', '\n')
-
-# 3. 建立連線
-gc = gspread.service_account_from_dict(creds_dict)
-sh = gc.open('工程科排隊系統').sheet1
-
-# 4. 系統介面
-st.title("工程科諮詢預約系統")
-st.write("連線已成功建立！")
-
-# 獲取長官狀態
-boss_status = sh.acell('D2').value
-st.subheader(f"長官目前狀態: :blue[{boss_status}]")
-
-# 分頁顯示
-tab1, tab2 = st.tabs(["同仁排隊區", "長官管理後台"])
-
-with tab1:
-    name = st.text_input("請輸入您的姓名")
-    if st.button("加入排隊"):
-        if name:
-            sh.append_row([name, "等待中", ""])
-            st.success(f"{name} 已成功加入排隊！")
-        else:
-            st.warning("請輸入姓名")
-
-with tab2:
-    st.write("這裡是長官管理後台內容...")
