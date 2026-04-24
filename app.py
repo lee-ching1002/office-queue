@@ -1,7 +1,4 @@
-import streamlit as st
-import gspread
-
-# 直接定義字典，完全不透過 json.loads 處理複雜字串
+# 這是我們剛剛定義的字典
 creds_dict = {
     "type": "service_account",
     "project_id": "officequeuesystem-494313",
@@ -15,6 +12,9 @@ creds_dict = {
     "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/queue-bot%40officequeuesystem-494313.iam.gserviceaccount.com",
     "universe_domain": "googleapis.com"
 }
+
+# 【關鍵修正】：手動替換轉譯字符為真實換行
+creds_dict["private_key"] = creds_dict["private_key"].replace('\\n', '\n')
 
 gc = gspread.service_account_from_dict(creds_dict)
 sh = gc.open('工程科排隊系統').sheet1
