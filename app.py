@@ -2,15 +2,11 @@ import streamlit as st
 import gspread
 import json
 
-# 直接讀取 Secrets
+# 讀取 Secrets
 json_str = st.secrets["GCP_JSON"]
 
-# 這一行是關鍵，有些時候金鑰被多加了引號，這裡我們進行清理
-if json_str.startswith("'") and json_str.endswith("'"):
-    json_str = json_str[1:-1]
-elif json_str.startswith('"') and json_str.endswith('"'):
-    json_str = json_str[1:-1]
+# 這一行會確保 JSON 字串內的 \n 能被真正轉換成換行符號
+creds_dict = json.loads(json_str.encode('utf-8').decode('unicode_escape'))
 
-creds_dict = json.loads(json_str)
 gc = gspread.service_account_from_dict(creds_dict)
 sh = gc.open('工程科排隊系統').sheet1
