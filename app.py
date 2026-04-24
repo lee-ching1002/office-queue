@@ -1,3 +1,6 @@
+import streamlit as st
+import gspread
+
 # 請將這部分代碼替換掉，特別注意私鑰那行的賦值方式
 creds_dict = {
     "type": "service_account",
