@@ -36,3 +36,15 @@ creds_dict = {
     "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/queue-bot%40officequeuesystem-494313.iam.gserviceaccount.com",
     "universe_domain": "googleapis.com"
 }
+# ... (前段連線邏輯) ...
+gc = gspread.service_account_from_dict(creds_dict)
+sh = gc.open('工程科排隊系統').sheet1
+
+# 測試：在畫面上強制印出一行字，確認程式確實有在執行
+st.title("系統測試")
+st.write("連線已成功建立！")
+
+# 之後再放您原本的 UI 程式碼
+name = st.text_input("請輸入您的姓名")
+if st.button("加入排隊"):
+    st.write(f"你好, {name}")
